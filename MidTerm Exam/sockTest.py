@@ -2,7 +2,6 @@
 
 import socket
 
-
 def main():
 
     try:
@@ -13,30 +12,20 @@ def main():
             print(f"socket failed: {err}")
 
     try:
-         h = "localhost"
-         p = 135
+        h = "localhost"
+        p = 135
+        r = s.connect((h, p))   #Connect to socket with h and p as the host and port
+        print ("successfully connnected to port") 
 
-    except socket.gaierror:
-         print("there was an error resolving")
-
-
-    try:
-        r = s.connect((h, p))
-        print ("successfully connnected to port")
-        print(f"Result is: {r}")
-        
-
-    except ConnectionRefusedError as e:
+    except ConnectionRefusedError as e: #If error connecting to port pop this error
          print(f"Connection Refused: {e}")
+
+    except socket.gaierror as ge:  # If error resolving host pop this error
+             print(f"there was an error resolving: {ge}")
 
     s.close()
 
     
-
-
-
-
-
 
 if __name__ == '__main__':
     main()
