@@ -10,11 +10,11 @@ def main():
         print("socket created")
 
     except socket.error as err:
-            print("socket failed" %(err))
+            print(f"socket failed: {err}")
 
     try:
          h = "localhost"
-         p = 136
+         p = 135
 
     except socket.gaierror:
          print("there was an error resolving")
