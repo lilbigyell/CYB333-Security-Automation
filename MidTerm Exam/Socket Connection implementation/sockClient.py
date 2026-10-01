@@ -3,13 +3,15 @@ import socket
 
 def main():
     s = socket.socket()
-
     p = 12345
 
 
-    s.connect(('localhost', p))
+    try:
+        s.connect(('localhost', p))
+        print(s.recv(1024).decode())
 
-    print(s.recv(1024).decode())
+    except ConnectionRefusedError as ce:
+        print(f"Connection Error: {ce}")
 
     s.close()
 
