@@ -13,7 +13,7 @@ def main():
 
     try:
         h = "localhost"
-        p = 12345
+        p = 137
         r = s.connect((h, p))   #Connect to socket with h and p as the host and port
         print (f"successfully connnected to port: {p}") 
 
@@ -22,6 +22,9 @@ def main():
 
     except socket.gaierror as ge:   # If error resolving host pop this error
              print(f"there was an error resolving: {ge}")
+
+    except PermissionError as pe:
+         print(f"Permission Denied: {pe}")
 
     s.close()
 
