@@ -8,7 +8,7 @@ def main():
     s = socket.socket() #Creates Socket Object
     print("Socket Created")
 
-    p = 12345   #Port Number
+    p = 80   #Port Number
 
     s.bind(('', p)) #Binds the p variable 12345 as a port to the s socket object
     print(f"Socket bound to port: {p}")
