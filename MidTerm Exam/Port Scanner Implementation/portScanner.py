@@ -20,21 +20,43 @@ class Scanner:
     def is_open(self, port):
         s = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
         s.setsockopt(socket.IPPROTO_TCP, socket.TCP_NODELAY, 1)
-        s.settimeout(0.0001)
+        s.settimeout(0.1)
         result = s.connect_ex((self.ip, port))
-        print(f'Port {port}:   {result}')
         s.close()
         return result == 0
 
     def write(self, filepath):
         pass
 
+class Grabber:
+    def __init__(self, ip, port):
+        self.ip = ip
+        self.port = port
+        self.socket = socket.socket(socket.AF_INET, socket.SOCK_STREAM)
+        self.socket.settimeout(.1)
+        self.socket.connect((self.ip, self.port))
+
+
+    def read(self, length=1024):
+        return self.socket.recv(length)
+
+    def close(self):
+        self.socket.close()
+
+
 @timefun
 def main():
-    ip = '192.168.0.234'
+    ip = 'scanme.nmap.org'
     scanner = Scanner(ip)
-    scanner.scan(1,1000)
-    print(scanner.open_ports)
+    scanner.scan(1,443)
+    print('Open Ports;',scanner.open_ports)
+
+    for port in scanner.open_ports:
+        try:
+            grabber = Grabber(ip, port)
+            print(grabber.read())
+        except TimeoutError as to:
+            print(f"Port: {port} timed out before grabbing")
 
 if __name__ == '__main__':
     main()
